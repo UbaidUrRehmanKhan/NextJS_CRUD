@@ -2,53 +2,60 @@ import { useReducer } from "react"
 import { BiPlus } from 'react-icons/bi'
 import Success from "./success"
 import Bug from "./bug"
-// import { useQueryClient, useMutation } from "react-query"
+import { useQueryClient, useMutation } from "react-query"
 import { addUser, getUsers } from "../lib/helper"
 
-export default function AddUserForm({ formData, setFormData }){
+const formReducer = (state, event) => {
+    return {
+        ...state,
+        [event.target.name]: event.target.value
+    }
+}
 
-    // const queryClient = useQueryClient()
-    // const addMutation = useMutation(addUser, {
-    //     onSuccess : () => {
-    //         queryClient.prefetchQuery('users', getUsers)
-    //     }
-    // })
+export default function AddUserForm(){
+
+    const queryClient = useQueryClient()
+    const [formData, setFormData] = useReducer(formReducer, {})
+    const addMutation = useMutation(addUser, {
+        onSuccess : () => {
+            queryClient.prefetchQuery('users', getUsers)
+        }
+    })
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(formData)
         if(Object.keys(formData).length == 0) return console.log("Don't have Form Data");
-        // let { firstname, lastname, email, salary, date, status } = formData;
+        let { firstname, lastname, email, salary, date, status } = formData;
 
-        // const model = {
-        //     name : `${firstname} ${lastname}`,
-        //     avatar: `https://randomuser.me/api/portraits/men/${Math.floor(Math.random() * 10)}.jpg`,
-        //     email, salary, date, status : status ?? "Active"
-        // }
+        const model = {
+            name : `${firstname} ${lastname}`,
+            avatar: `https://randomuser.me/api/portraits/men/${Math.floor(Math.random() * 10)}.jpg`,
+            email, salary, date, status : status ?? "Active"
+        }
 
-        // addMutation.mutate(model)
+        addMutation.mutate(model)
     }
 
-    // if(addMutation.isLoading) return <div>Loading!</div>
-    // if(addMutation.isError) return <Bug message={addMutation.error.message}></Bug>
-    // if(addMutation.isSuccess) return <Success message={"Data Added Successfully"}></Success>
+    if(addMutation.isLoading) return <div>Loading!</div>
+    if(addMutation.isError) return <Bug message={addMutation.error.message}></Bug>
+    if(addMutation.isSuccess) return <Success message={"Added Successfully"}></Success>
 
     return (
         <form className="grid lg:grid-cols-2 w-4/6 gap-4" onSubmit={handleSubmit}>
             <div className="input-type">
-                <input type="text" name="firstname" onChange={setFormData} className="border w-full px-5 py-3 focus:outline-none rounded-md" placeholder="FirstName" />
+                <input type="text" onChange={setFormData} name="firstname" className="border w-full px-5 py-3 focus:outline-none rounded-md" placeholder="FirstName" />
             </div>
             <div className="input-type">
-                <input type="text"  name="lastname" onChange={setFormData} className="border w-full px-5 py-3 focus:outline-none rounded-md" placeholder="LastName" />
+                <input type="text" onChange={setFormData} name="lastname" className="border w-full px-5 py-3 focus:outline-none rounded-md" placeholder="LastName" />
             </div>
             <div className="input-type">
-                <input type="text"  name="email" onChange={setFormData} className="border w-full px-5 py-3 focus:outline-none rounded-md" placeholder="Email" />
+                <input type="text" onChange={setFormData} name="email" className="border w-full px-5 py-3 focus:outline-none rounded-md" placeholder="Email" />
             </div>
             <div className="input-type">
-                <input type="text"  name="salary" onChange={setFormData} className="border w-full px-5 py-3 focus:outline-none rounded-md" placeholder="Salary" />
+                <input type="text" onChange={setFormData} name="salary" className="border w-full px-5 py-3 focus:outline-none rounded-md" placeholder="Salary" />
             </div>
             <div className="input-type">
-                <input type="date"  name="date" onChange={setFormData} className="border px-5 py-3 focus:outline-none rounded-md" placeholder="Salary" />
+                <input type="date" onChange={setFormData} name="date" className="border px-5 py-3 focus:outline-none rounded-md" placeholder="Salary" />
             </div>
 
 
