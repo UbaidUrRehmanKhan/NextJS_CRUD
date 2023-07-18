@@ -19,9 +19,11 @@ export async function getUser(req, res){
 
         if(userId){
             const user = await Users.findById(userId);
-            res.status(200).json(user)
+            return res.status(200).json(user)
+        } else {
+            return res.status(404).json({ error : "User not Selected...!"});
         }
-        res.status(404).json({ error : "User not Selected...!"});
+       
     } catch (error) {
         res.status(404).json({ error: "Cannot get the User...!"})
     }
