@@ -1,5 +1,7 @@
 ## Getting Started
 
+This project is created with NextJS, TailwindCSS, react-query and redux-toolkit
+
 Firstly, make sure that node is present in your system, then install the node modules in the project directory:
 
 ```bash
