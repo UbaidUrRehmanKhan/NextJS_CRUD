@@ -7,8 +7,10 @@ Firstly, make sure that node is present in your system, then install the node mo
 ```bash
 npm install
 ```
-Secondly, replace the MONGODB_URI in next.config.js file with your MONGODB_URI (A commented dummy URI is present over there from Mongo Atlas for understanding purposes)
-
+Secondly, replace the MONGODB_URI in next.config.js file with your MONGODB_URI. Here is an example of dummy URI from Mongo Atlas for understanding purposes:
+```bash
+mongodb+srv://urehman:<password>@myprojectcluster.jdcpbjy.mongodb.net/users
+```
 
 Thirdly, run the development server:
 
